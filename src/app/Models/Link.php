@@ -60,4 +60,20 @@ class Link extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Model observer.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Observer before deleting the link
+        static::deleting(function (Link $link) {
+            $link->sublinks()->delete();
+            $link->linkable()->delete();
+        });
+    }
 }

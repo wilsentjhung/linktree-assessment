@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\AddUuid;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    use AddUuid, HasFactory;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -29,5 +27,20 @@ class User extends Model
     public function links()
     {
         return $this->hasMany(Link::class);
+    }
+
+    /**
+     * Model observer.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Observer before deleting the user
+        static::deleting(function (User $user) {
+            $user->links()->delete();
+        });
     }
 }

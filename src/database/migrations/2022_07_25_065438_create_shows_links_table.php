@@ -10,6 +10,7 @@ class CreateShowsLinksTable extends Migration
      * Run the migrations.
      *
      * @return void
+     * @TODO Add more cols related to shows base link (if any)
      */
     public function up()
     {

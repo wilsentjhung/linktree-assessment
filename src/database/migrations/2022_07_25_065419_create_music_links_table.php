@@ -10,6 +10,7 @@ class CreateMusicLinksTable extends Migration
      * Run the migrations.
      *
      * @return void
+     * @TODO Add more cols related to music base link (if any)
      */
     public function up()
     {

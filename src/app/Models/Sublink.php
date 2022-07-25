@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Sublink extends Model
 {
-    use HasFactory;
-
     /**
      * Type music sublink
      */
@@ -43,5 +40,20 @@ class Sublink extends Model
     public function linkable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Model observer.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Observer before deleting the sublink
+        static::deleting(function (Sublink $sublink) {
+            $sublink->linkable()->delete();
+        });
     }
 }
