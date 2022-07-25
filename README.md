@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://github.com/blstrco/linktr.ee-backend-assessment/raw/master/Screen%20Shot%202019-07-08%20at%202.09.47%20pm.png">
-</p>
-
 # The Problem
 We have three new link types for our users.
 
