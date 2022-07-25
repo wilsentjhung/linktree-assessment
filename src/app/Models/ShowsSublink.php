@@ -33,6 +33,8 @@ class ShowsSublink extends Model
         self::STATUS_SOLD_OUT,
     ];
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -47,12 +49,21 @@ class ShowsSublink extends Model
     ];
 
     /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'id',
+    ];
+
+    /**
      * Get the sublink for the shows sublink source.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function sublink()
     {
-        return $this->morphOne(Sublink::class);
+        return $this->morphOne(Sublink::class, 'linkable');
     }
 }

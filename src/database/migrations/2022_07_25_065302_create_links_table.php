@@ -18,6 +18,7 @@ class CreateLinksTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->morphs('linkable');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -3,25 +3,46 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sublink extends Model
 {
-    /**
-     * Type music sublink
-     */
-    public const TYPE_MUSIC_SUBLINK = 'musicSublink';
+    use SoftDeletes;
 
     /**
-     * Type shows sublink
+     * Suffix for sublink type
      */
-    public const TYPE_SHOWS_SUBLINK = 'showsSublink';
+    public const SUFFIX_SUBLINK_TYPE = 'Sublink';
 
     /**
-     * Type list
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
      */
-    public const TYPE_LIST = [
-        self::TYPE_MUSIC_SUBLINK,
-        self::TYPE_SHOWS_SUBLINK,
+    protected $fillable = [
+        'link_id',
+        'linkable_id',
+        'linkable_type',
+    ];
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'link_id',
+        'linkable_id',
+        'linkable_type',
+    ];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array<int, string>
+     */
+    protected $with = [
+        'linkable',
     ];
 
     /**

@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Link extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
 
     /**
      * Type classic link
@@ -39,6 +39,37 @@ class Link extends Model
     public const TYPE_LIST_WITH_SUBLINKS = [
         self::TYPE_MUSIC_LINK,
         self::TYPE_SHOWS_LINK,
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id',
+        'linkable_id',
+        'linkable_type',
+    ];
+ 
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'user_id',
+        'linkable_id',
+    ];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array<int, string>
+     */
+    protected $with = [
+        'sublinks',
+        'linkable',
     ];
 
     /**

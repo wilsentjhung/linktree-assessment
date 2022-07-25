@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\ShowsLink;
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +18,7 @@ class CreateShowsLinksTable extends Migration
     {
         Schema::create('shows_links', function (Blueprint $table) {
             $table->id();
+            $table->string('title', ShowsLink::LEN_TITLE)->index();
         });
     }
 

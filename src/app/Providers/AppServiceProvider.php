@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\ClassicLink;
+use App\Models\MusicLink;
+use App\Models\ShowsLink;
+use App\Models\MusicSublink;
+use App\Models\ShowsSublink;
+use App\Models\Sublink;
+
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
@@ -16,11 +23,11 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         Relation::enforceMorphMap([
-            'classic' => 'App\Models\ClassicLink',
-            'music' => 'App\Models\MusicLink',
-            'shows' => 'App\Models\ShowsLink',
-            'musicSublink' => 'App\Models\MusicSublink',
-            'showsSublink' => 'App\Models\ShowsSublink',
+            'classic' => ClassicLink::class,
+            'music' => MusicLink::class,
+            'shows' => ShowsLink::class,
+            'music' . Sublink::SUFFIX_SUBLINK_TYPE => MusicSublink::class,
+            'shows' . Sublink::SUFFIX_SUBLINK_TYPE => ShowsSublink::class,
         ]);
 
         Sanctum::ignoreMigrations();

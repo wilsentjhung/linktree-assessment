@@ -18,6 +18,7 @@ class CreateSublinksTable extends Migration
             $table->foreignId('link_id')->constrained();
             $table->nullableMorphs('linkable');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

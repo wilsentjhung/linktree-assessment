@@ -9,6 +9,8 @@ class MusicSublink extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,12 +22,21 @@ class MusicSublink extends Model
     ];
 
     /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'id',
+    ];
+
+    /**
      * Get the sublink for the music sublink source.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function sublink()
     {
-        return $this->morphOne(Sublink::class);
+        return $this->morphOne(Sublink::class, 'linkable');
     }
 }

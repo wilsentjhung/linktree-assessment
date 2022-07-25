@@ -14,6 +14,8 @@ class ClassicLink extends Model
      */
     public const LEN_TITLE = 144;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,12 +27,21 @@ class ClassicLink extends Model
     ];
 
     /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'id',
+    ];
+
+    /**
      * Get the link for the classic link source.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function link()
     {
-        return $this->morphOne(Link::class);
+        return $this->morphOne(Link::class, 'linkable');
     }
 }
