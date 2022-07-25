@@ -15,6 +15,8 @@ class User extends Model
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     * @TODO Add more user cols as this is only a simplistic model
+     * @TODO Add authentication capabilities
      */
     protected $fillable = [
         'username',
