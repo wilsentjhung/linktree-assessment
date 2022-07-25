@@ -27,7 +27,7 @@ class Sublink extends Model
     /**
      * Get the link that owns the sublink.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function link()
     {
@@ -36,6 +36,8 @@ class Sublink extends Model
 
     /**
      * Get the linkable model that owns the sublink.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function linkable()
     {

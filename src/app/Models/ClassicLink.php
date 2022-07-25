@@ -27,7 +27,7 @@ class ClassicLink extends Model
     /**
      * Get the link for the classic link source.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function link()
     {

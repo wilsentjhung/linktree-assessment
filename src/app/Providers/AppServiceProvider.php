@@ -16,9 +16,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         Relation::enforceMorphMap([
-            'classicLink' => 'App\Models\ClassicLink',
-            'musicLink' => 'App\Models\MusicLink',
-            'showsLink' => 'App\Models\ShowsLink',
+            'classic' => 'App\Models\ClassicLink',
+            'music' => 'App\Models\MusicLink',
+            'shows' => 'App\Models\ShowsLink',
             'musicSublink' => 'App\Models\MusicSublink',
             'showsSublink' => 'App\Models\ShowsSublink',
         ]);

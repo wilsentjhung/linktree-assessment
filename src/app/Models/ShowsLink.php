@@ -20,7 +20,7 @@ class ShowsLink extends Model
     /**
      * Get the link for the shows link source.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function link()
     {

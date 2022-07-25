@@ -22,7 +22,7 @@ class MusicSublink extends Model
     /**
      * Get the sublink for the music sublink source.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function sublink()
     {

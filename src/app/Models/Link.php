@@ -12,17 +12,17 @@ class Link extends Model
     /**
      * Type classic link
      */
-    public const TYPE_CLASSIC_LINK = 'classicLink';
+    public const TYPE_CLASSIC_LINK = 'classic';
 
     /**
      * Type music link
      */
-    public const TYPE_MUSIC_LINK = 'musicLink';
+    public const TYPE_MUSIC_LINK = 'music';
 
     /**
      * Type shows link
      */
-    public const TYPE_SHOWS_LINK = 'showsLink';
+    public const TYPE_SHOWS_LINK = 'shows';
 
     /**
      * Type list
@@ -34,9 +34,17 @@ class Link extends Model
     ];
 
     /**
+     * Type list with sublinks
+     */
+    public const TYPE_LIST_WITH_SUBLINKS = [
+        self::TYPE_MUSIC_LINK,
+        self::TYPE_SHOWS_LINK,
+    ];
+
+    /**
      * Get the user that owns the link.
      *
-     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
@@ -46,7 +54,7 @@ class Link extends Model
     /**
      * Get all the sublinks for the link.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function sublinks()
     {
@@ -55,10 +63,26 @@ class Link extends Model
 
     /**
      * Get the linkable model that owns the link.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function linkable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Scope links by user uuid.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $userUuid
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByUserUuid($query, string $userUuid)
+    {
+        return $query->whereHas('user', function ($q) use ($userUuid) {
+            $q->byUuid($userUuid);
+        });
     }
 
     /**

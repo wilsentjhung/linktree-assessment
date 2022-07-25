@@ -20,7 +20,7 @@ class MusicLink extends Model
     /**
      * Get the link for the music link source.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function link()
     {

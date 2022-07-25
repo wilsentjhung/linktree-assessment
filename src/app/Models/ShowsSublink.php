@@ -49,7 +49,7 @@ class ShowsSublink extends Model
     /**
      * Get the sublink for the shows sublink source.
      *
-     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function sublink()
     {
