@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\AddUuid;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class MusicSublink extends Model
 {
-    use AddUuid, HasFactory;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -17,17 +15,17 @@ class User extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
-        'email',
+        'name',
+        'url',
     ];
 
     /**
-     * Get all the links for the user.
+     * Get the sublink for the music sublink source.
      *
      * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function links()
+    public function sublink()
     {
-        return $this->hasMany(Link::class);
+        return $this->morphOne(Sublink::class);
     }
 }

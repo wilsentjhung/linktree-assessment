@@ -6,6 +6,11 @@ use Illuminate\Support\Str;
 
 trait AddUuid
 {
+    /**
+     * Model observer to add UUID.
+     *
+     * @return void
+     */
     protected static function boot()
     {
         parent::boot();
