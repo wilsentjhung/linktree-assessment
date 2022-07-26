@@ -1,64 +1,96 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# The Solution
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## Intro
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The solution is written in PHP 8.1 with Laravel 9.2 framework (https://laravel.com/docs/9.x/releases). The application is a REST API that is also fully Dockerized. It uses several Docker containers such as:
+- `php-fpm` - PHP FastCGI process
+- `nginx` - web server
+- `mysql` - local DB
+- `redis` - local cache
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Local setup
 
-## Learning Laravel
+For local development, `docker-compose` (https://docs.docker.com/compose/) is used. Follow the steps below:
+1. Ensure you have Docker installed on your machine (https://docs.docker.com/get-docker/)
+2. Clone this repo
+3. `cd <PROJECT>/src` - cd into the project's src directory
+4. `cp .env.example .env` - copy env file
+5. `docker-compose build` - to build docker environment
+6. `docker-compose up -d` - bring up all Docker containers
+7. `./docker-connect.sh` - to exec into Docker php-fpm container (might need to `chmod +x docker-connect.sh` if failed)
+8. `composer install` - Composer install
+9. `php artisan migrate` - do DB migrations
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Run feature and unit tests
 
-## Laravel Sponsors
+There are 25 tests implemented with 91 assertions using PHPUnit (https://laravel.com/docs/9.x/testing). Test data is also mocked using Laravel factory (https://laravel.com/docs/9.x/database-testing#defining-model-factories) and faker(https://github.com/FakerPHP/Faker). To run the tests, in the Docker container run:
+```
+php artisan test
+```
+or
+```
+vendor/bin/phpunit
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+## DB schemas
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- `users` table - user info to support `links`
+  - `id` - PRIMARY, UNIQUE
+  - `uuid` - SECONDARY, UNIQUE
+  - `email` - VARCHAR(255), UNIQUE
+  - `created_at` - DATETIME
+  - `updated_at` - DATETIME
+  - `deleted_at` - DATETIME
+  - NOTE:
+    - run `php artisan migrate:fresh --seed` to seed some users into the local DB
+  - TODO:
+    - more coloumns to define a user
+    - authentication/authorization capabilities
+- `links` table - base link info
+  - `id` - PRIMARY, UNIQUE
+  - `user_id` - FOREIGN - reference `users` (1-to-many)
+  - `linkable_id` - FOREIGN - reference polymorphic link type (1-to-1)
+  - `linkable_type` - VARCHAR(255) - link type (`classic`, `music`, `shows`)
+  - `created_at` - DATETIME
+  - `updated_at` - DATETIME
+  - `deleted_at` - DATETIME
+- `classic_links` table - top-level classic link info
+  - `id` - PRIMARY, UNIQUE
+  - `title` - VARCHAR(144), INDEX
+  - `url` - VARCHAR(255)
+  - TODO:
+    - more coloumns to define a classic link i.e. `thumbnail_url`, `attachments`, etc.
+- `music_links` table - top-level mucic link info
+  - `id` - PRIMARY, UNIQUE
+  - `title` - VARCHAR(144), INDEX
+  - TODO:
+    - more coloumns to define a music link i.e. `thumbnail_url`, `attachments`, etc.
+- `shows_links` table - top-level shows link info 
+  - `id` - PRIMARY, UNIQUE
+  - `title` - VARCHAR(144), INDEX
+  - TODO:
+    - more coloumns to define a shows link i.e. `thumbnail_url`, `attachments`, etc.
+- `sublinks` table - child link info mainly for music and shows
+  - `id` - PRIMARY, UNIQUE
+  - `link_id` - FOREIGN - reference `links` (1-to-many)
+  - `linkable_id` - FOREIGN - reference polymorphic sublink type (1-to-1)
+  - `linkable_type` - VARCHAR(255) - sublink type (`musicSublink`, `showsSublink`)
+  - `created_at` - DATETIME
+  - `updated_at` - DATETIME
+  - `deleted_at` - DATETIME
+- `music_sublinks` table - child music link info
+  - `id` - PRIMARY, UNIQUE
+  - `name` - VARCHAR(255), INDEX
+  - `url` - VARCHAR(255)
+- `shows_sublinks` table - child shows link info
+  - `id` - PRIMARY, UNIQUE
+  - `name` - VARCHAR(255), INDEX
+  - `url` - VARCHAR(255)
+  - `status` - ENUM(`on-sale`, `not-on-sale`, `sold-out`)
+  - `date` - DATE, NULL
+  - `venue` - VARCHAR(255), NULL
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
