@@ -35,6 +35,10 @@ class SublinkRule implements RuleContract
      */
     public function passes($attribute, $value)
     {
+        if (is_array($value)) {
+            return false;
+        }
+
         $json = json_decode($value, true);
 
         if (empty($json)) {
@@ -99,11 +103,9 @@ class SublinkRule implements RuleContract
                     Rule::in(ShowsSublink::STATUS_LIST),
                 ],
                 'date' => [
-                    'required',
                     'date',
                 ],
                 'venue' => [
-                    'required',
                     'string',
                 ],
             ],

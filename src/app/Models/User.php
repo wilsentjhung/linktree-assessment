@@ -19,7 +19,6 @@ class User extends Model
      * @TODO Add authentication capabilities
      */
     protected $fillable = [
-        'username',
         'email',
     ];
 

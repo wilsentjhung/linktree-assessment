@@ -21,7 +21,7 @@ class CreateShowsSublinksTable extends Migration
             $table->string('url');
             $table->enum('status', ShowsSublink::STATUS_LIST)->default(ShowsSublink::STATUS_NOT_ON_SALE)->index();
             $table->date('date')->nullable()->index();
-            $table->string('venue')->index();
+            $table->string('venue')->nullable()->index();
         });
     }
 
