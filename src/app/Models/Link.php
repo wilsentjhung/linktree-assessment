@@ -68,8 +68,8 @@ class Link extends Model
      * @var array<int, string>
      */
     protected $with = [
-        'sublinks',
         'linkable',
+        'sublinks',
     ];
 
     /**
