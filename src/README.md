@@ -37,6 +37,7 @@ There are 25 tests implemented with 91 assertions using PHPUnit (https://laravel
 **Definitions**:
 - All DB migrations are defined in `database/migrations/*`
 - All DB factories are defined in `database/factories/*`
+- All DB models are defined in `app/Models/*`
 - MySQL DB is exposed on port `3310` locally 
 - DB credentials are defined in `docker-compose.yaml` and `.env.example`
 - DB schema diagram is available in `DB_SCHEMA_DIAGRAM.jpeg` or https://lucid.app/lucidchart/f3e061c5-8db2-4f63-be7f-7f015317846d/edit?viewport_loc=-1022%2C82%2C4720%2C2440%2C0_0&invitationId=inv_f102969e-8d5f-4368-99f8-e8dec04b357d#.
