@@ -316,7 +316,7 @@ POST /api/v1/links
 **Example 200 response**:
 Return JSON of the newly created classic link (similar to the request payload above).
 
-**Errors**:
+**Example errors**:
 - 404 - user not found
 ```
 {
@@ -382,7 +382,7 @@ POST /api/v1/links
 **Example 200 response**:
 Return JSON of the newly created classic link (similar to the request payload above).
 
-**Errors**:
+**Example errors**:
 - 404 - user not found
 ```
 {
@@ -449,7 +449,7 @@ POST /api/v1/links
 **Example 200 response**:
 Return JSON of the newly created classic link (similar to the request payload above).
 
-**Errors**:
+**Example errors**:
 - 404 - user not found
 ```
 {
